@@ -11,6 +11,7 @@ const showAlbums = (info) => {
         albumTitle.innerText = album.title;
         
         const albumInfo = document.createElement('div');
+        albumInfo.classList.add('title');
         albumInfo.appendChild(albumTitle);
         albumInfo.innerHTML += ` (${album.artist}, ${album.year})`;
 
@@ -44,14 +45,19 @@ const showAlbums = (info) => {
 };
 
 fetch('./data/info.json')
-.then((response) => {
-    return response.json(); 
-})    
+.then((response) => response.json())    
 .then((data) => {
     showAlbums(data);
 })
 .catch((error) => {
-    console.log(error);
+    document.querySelector('#albums').innerHTML = `
+        <section>
+            <article>
+                <h2>Error</h2>
+                <p>${error}</p>
+            </article>
+        </section>
+    `;
 });
 
 /*

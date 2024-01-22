@@ -61,6 +61,10 @@ article {
 
 /* Classes and element IDs */
 
+.title {
+    margin-bottom: 0.5rem;
+    border-bottom: thin solid var(--colorPrimary);
+}
 .albumTitle {
     font-style: italic;
 }
