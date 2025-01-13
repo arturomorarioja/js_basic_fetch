@@ -1,5 +1,6 @@
-'use strict';
-
+/**
+ * It displays information about music albums as retrieved by fetch() from the JSON file
+ */
 const showAlbums = (info) => {
     const albumsSection = document.createElement('section');
 
@@ -44,26 +45,32 @@ const showAlbums = (info) => {
     document.querySelector('#albums').innerHTML = albumsSection.innerHTML;
 };
 
-fetch('./data/info.json')
-.then((response) => response.json())    
-.then((data) => {
+/**
+ * Error handling
+ * If fetch() fails to fetch, an error is shown on the page
+ */
+const handleError = (error) => {
+    const errorMessage = document.querySelector('#error').content.cloneNode(true);
+    errorMessage.querySelector('#message').innerText = error;
+    document.querySelector('#albums').append(errorMessage);
+};
+
+/**
+ * The JSON file is fetched and its information shown on the page
+ */
+const FILE_URL = './data/info.json';
+
+fetch(FILE_URL)
+.then((response) => response.json())
+.then(data => {
     showAlbums(data);
 })
-.catch((error) => {
-    document.querySelector('#albums').innerHTML = `
-        <section>
-            <article>
-                <h2>Error</h2>
-                <p>${error}</p>
-            </article>
-        </section>
-    `;
-});
+.catch(handleError);
 
 /*
     Alternative fetch implementation
 */
-// fetch('./data/info.json')
+// fetch(FILE_URL)
 // .then((response) => {
 //     response.json().then((data) => {
 //         showAlbums(data);
